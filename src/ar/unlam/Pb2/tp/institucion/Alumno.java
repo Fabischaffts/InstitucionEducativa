@@ -2,18 +2,18 @@ package ar.unlam.Pb2.tp.institucion;
 
 import java.time.LocalDate;
 
-public class Alumno {
-	private Integer dni;
-    private String nombre;
-    private Integer edad;
+public class Alumno extends Persona {
+
+	private Integer edad;
     private boolean aprobado;
     private LocalDate[] fechas;
     private boolean[] asistencias;
     private int indiceClase;
 
-    public Alumno(Integer dni,Integer edad, String nombre ) {
-    	this.dni = dni;
-        this.nombre = nombre;
+    public Alumno(Integer dni, String nombre, String apellido, Integer edad) {
+ 		super(dni, nombre, apellido);
+ 	
+   
         this.edad = edad;
         this.aprobado = false;
         this.fechas = new LocalDate[10]; // Inicialmente se reserva espacio para 10 fechas
@@ -21,9 +21,7 @@ public class Alumno {
         this.indiceClase = 0;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    
 
     public Integer getEdad() {
         return edad;
@@ -68,11 +66,4 @@ public class Alumno {
         asistencias = nuevasAsistencias;
     }
 
-	public Integer getDni() {
-		return dni;
-	}
-
-	public void setDni(Integer dni) {
-		this.dni = dni;
-	}
 }

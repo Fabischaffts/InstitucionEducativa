@@ -1,16 +1,15 @@
 package ar.unlam.Pb2.tp.institucion;
 
-public class Docente {
+public class Docente extends Persona{
 	
 	private String nombre; 
 	private Integer dni;
-	private TipoDeEspecialidad Tipo;
+	private TipoDeEspecialidad tipo;
 
-	
-	public Docente(Integer dni, String nombre, TipoDeEspecialidad Tipo) {
-		this.setDni(dni);
-		this.nombre = nombre;
-		this.setTipo(Tipo);
+	public Docente(Integer dni, String nombre, String apellido, TipoDeEspecialidad tipo) {
+		super(dni, nombre, apellido);
+		
+		this.setTipo(tipo);
 		
 	}
 	public String getNombre() {
@@ -27,10 +26,10 @@ public class Docente {
 		this.dni = dni;
 	}
 	public TipoDeEspecialidad getTipo() {
-		return Tipo;
+		return tipo;
 	}
 	public void setTipo(TipoDeEspecialidad tipo) {
-		Tipo = tipo;
+		tipo = this.tipo;
 	}
 	}
 
