@@ -87,5 +87,13 @@ public class Secundaria {
 	        }
 		
 	}
+	public boolean agregarAlumno(Alumno alumno) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	public boolean inscribirAlumnoEnAnio(Alumno alumno, Anio anio) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 }

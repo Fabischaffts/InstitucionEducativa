@@ -7,16 +7,18 @@ public class Sala {
 	   
 	private String nombre;
     private ArrayList <Alumno> alumnos;
-    private DocenteJardin[] docentes;
+    private ArrayList <Docente>docentes;
     private int indiceAlumno;
     private int indiceDocente;
+    private final static Integer maxDocentes = 2;
 
-    public Sala(String nombre, int maxAlumnos, int maxDocentes) {
+    public Sala(String nombre, Integer minAlumnos) {
         this.nombre = nombre;
         this.alumnos = new ArrayList<Alumno>();
-        this.docentes = new DocenteJardin[maxDocentes];
+        this.docentes = new ArrayList<Docente>();
         this.indiceAlumno = 0;
         this.indiceDocente = 0;
+       
     }
 
     public String getNombre() {
@@ -32,14 +34,21 @@ public class Sala {
 
     }
 
-    public void agregarDocente(DocenteJardin docente) {
-        if (indiceDocente < docentes.length) {
-            docentes[indiceDocente++] = docente;
-        } else {
-            System.out.println("No hay más espacio para docentes en la sala " + nombre);
-        }
-    }
-
+    public Boolean agregarDocente(Docente docente) {
+       
+    		if(docentes.size()<=maxDocentes) {
+    		docentes.add(docente);
+    		return true;
+		}
+    	return false;	
+    } 
+	public Integer obtenerCantidadDeAlumnos() {
+		return alumnos.size();
+		
+		
+	}
+    
+/*
     public Sala mostrarContenido() {
         System.out.println("Sala: " + nombre);
         System.out.println("Alumnos:");
@@ -53,10 +62,46 @@ public class Sala {
             if (docente != null) {
                 System.out.println(" - " + docente.getNombre());
             }
-        }*/
+        }
 		
 		return null;
     }
+*/
+	public ArrayList<Alumno> getAlumnos() {
+		return alumnos;
+	}
+
+	public void setAlumnos(ArrayList<Alumno> alumnos) {
+		this.alumnos = alumnos;
+	}
+
+	public ArrayList<Docente> getDocentes() {
+		return docentes;
+	}
+
+	public void setDocentes(ArrayList<Docente> docentes) {
+		this.docentes = docentes;
+	}
+
+	public int getIndiceAlumno() {
+		return indiceAlumno;
+	}
+
+	public void setIndiceAlumno(int indiceAlumno) {
+		this.indiceAlumno = indiceAlumno;
+	}
+
+	public int getIndiceDocente() {
+		return indiceDocente;
+	}
+
+	public void setIndiceDocente(int indiceDocente) {
+		this.indiceDocente = indiceDocente;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	public static Sala valueOf(String colorSala) {
 		
@@ -79,5 +124,7 @@ public class Sala {
 		Sala other = (Sala) obj;
 		return Objects.equals(nombre, other.nombre);
 	}
+
+
 	
 }

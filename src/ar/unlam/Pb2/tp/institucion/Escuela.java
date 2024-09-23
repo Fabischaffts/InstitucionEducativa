@@ -10,18 +10,14 @@ public class Escuela {
 	private String nombre;
 	private ArrayList<Docente> docentes;
 	private ArrayList <Alumno> alumnos;
-	private Curso[] cursos;
-	private int indiceAlumno;
-    private int indiceDocente;
+
 	
 	public Escuela(String nombre) {
 		
 		this.nombre = nombre;
 		this.docentes = new ArrayList <Docente>();
 		this.alumnos = new ArrayList<Alumno>();
-		this.cursos = new Curso[3];
-		this.indiceAlumno = 0;
-	    this.indiceDocente = 0;
+	
 	    
 		
 	}
@@ -50,14 +46,7 @@ public class Escuela {
 		this.alumnos = alumnos;
 	}
 
-	public Curso[] getCursos() {
-		return cursos;
-	}
-
-	public void setCursos(Curso[] cursos) {
-		this.cursos = cursos;
-	}
-	public boolean agregarAlumno(Alumno alumno) {
+	public Boolean agregarAlumno(Alumno alumno) {
 		
 		for (Alumno alumnoDeEscuela : alumnos) {
 			if(alumnoDeEscuela.getDni().equals(alumno.getDni())) {
@@ -72,7 +61,7 @@ public class Escuela {
 	public Boolean agregarDocente(Docente docente) {
 	       for (Docente docenteDeEscuela : docentes) {
 	    		if(docenteDeEscuela.getDni().equals(docente.getDni())) {
-	            System.out.println("No hay más espacio para docentes en la sala " + nombre);
+	            System.out.println("el docente ya existe en la escuela");
 	            return false;
 	        }
 	       }

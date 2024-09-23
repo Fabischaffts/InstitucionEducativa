@@ -1,27 +1,41 @@
 package ar.unlam.Pb2.tp.institucion;
 
-
+import java.util.ArrayList;
 
 public class Grado {
 
     private String nombre;
-    private Alumno[] alumnos;
-    private DocentePrimaria[] docentes;
+    private ArrayList<Alumno> alumnos;
+    private ArrayList<Docente >docentes;
     private int indiceAlumno;
-    private int edadMinima;
-    private int indiceDocente;
+    private Integer edadMinima = 6;
+
+
+	private int indiceDocente;
 
     public Grado(String nombre, int edadMinima, int MaxDocente) {
         this.nombre = nombre;
-        this.edadMinima = edadMinima;
-        this.alumnos = new Alumno[30]; 
+        this.edadMinima = 6;
+        this.alumnos = new ArrayList<Alumno>(); 
         this.indiceAlumno = 0;
-        this.docentes = new DocentePrimaria[1];
+        this.docentes = new ArrayList<Docente>();
         this.indiceDocente = 0;
     }
 
-    public boolean agregarAlumno(Alumno alumno) {
-        if (alumno.getEdad() < edadMinima) {
+	public Integer getEdadMinima() {
+		return edadMinima;
+	}
+
+	public void setEdadMinima(Integer edadMinima) {
+		this.edadMinima = edadMinima;
+	}
+    
+    
+
+    public boolean agregarAlumnoAGrado(Alumno alumno) {
+    	return alumnos.add(alumno);
+    }
+     /*   if (alumno.getEdad() < edadMinima) {
             System.out.println("El alumno " + alumno.getNombre() + " no cumple con la edad mínima de " + edadMinima + " años para " + nombre);
             return false;
         }
@@ -71,5 +85,11 @@ public class Grado {
 	public void setDocentes(DocentePrimaria[] docentes) {
 		this.docentes = docentes;
 	}
+
+	public Integer getEdadMinima() {
+		return edadMinima;
+	}*/
+
+
 	
 }

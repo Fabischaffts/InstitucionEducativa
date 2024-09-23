@@ -1,8 +1,54 @@
 package ar.unlam.Pb2.tp.institucion;
 
-public class Primaria {
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-    private Grado[] grados;
+public class Primaria extends Escuela{
+	
+	private ArrayList <Alumno> alumnos;
+	private LinkedList<Grado> grados;
+	
+	public Primaria(String nombre) {
+		super(nombre);
+		this.grados =new LinkedList<Grado>();
+		this.alumnos = new ArrayList<Alumno>();
+		
+	}
+
+	@Override
+	public Boolean agregarAlumno(Alumno alumno) {
+		int edad = alumno.getEdad();
+		if (edad >= 6) {
+			alumnos.add(alumno);
+		return super.agregarAlumno(alumno);
+		}
+		return false;
+	}
+
+	public Boolean inscribirAlumnoEnGrado(Alumno alumno, Grado grado) {
+		for (Alumno alumnoEnPrimaria : alumnos) {
+			if(alumnoEnPrimaria.equals(alumno));
+			if(alumno.isAprobado()== true&&alumno.getEdad()>=grado.getEdadMinima());
+			return grado.agregarAlumnoAGrado(alumno);		
+		}
+		return false;	
+	}
+	
+	@Override
+	public Boolean agregarDocente(Docente docente) {
+		// TODO Auto-generated method stub
+		return super.agregarDocente(docente);
+	}
+
+	public LinkedList<Grado> getGrados() {
+		return grados;
+	}
+
+	public void setGrados(LinkedList<Grado> grados) {
+		this.grados = grados;
+	}
+
+   /* private Grado[] grados;
 
     public Primaria() {
         grados = new Grado[6];
@@ -84,6 +130,6 @@ public class Primaria {
         }
       
    
-    }
+    }*/
 }
 

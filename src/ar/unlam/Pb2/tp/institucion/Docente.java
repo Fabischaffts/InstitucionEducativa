@@ -31,5 +31,6 @@ public class Docente extends Persona{
 	public void setTipo(TipoDeEspecialidad tipo) {
 		tipo = this.tipo;
 	}
+
 	}
 

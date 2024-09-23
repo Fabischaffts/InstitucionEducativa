@@ -2,19 +2,20 @@ package ar.unlam.Pb2.tp.institucion;
 
 import java.util.ArrayList;
 
-public class Jardin{
+public class Jardin extends Escuela {
+
 
 private ArrayList <Sala> salas;
-private Escuela escuela;
 
 
-	public Jardin(Escuela escuela) {
-			this.escuela = escuela;
+	public Jardin(Escuela escuela, String nombre) {
+		super(nombre);
+			//this.escuela = escuela;
 	        this.salas = new ArrayList<Sala>(4);
-	        salas.add(new Sala("Celeste", 10, 2));
-	        salas.add(new Sala("Verde", 10, 2));
-	        salas.add(new Sala("Azul", 10, 2));
-	        salas.add(new Sala("Rojo", 10, 2));
+	        salas.add(new Sala("Celeste", 10));
+	        salas.add(new Sala("Verde", 10));
+	        salas.add(new Sala("Azul", 10));
+	        salas.add(new Sala("Rojo", 10));
 	    }
 
 	    public Sala obtenerSalaPorColor(String colorSala) {
@@ -60,8 +61,24 @@ private Escuela escuela;
 			//	}
 			
 			return null;
-		}
-	    	/*  switch (colorSala.toUpperCase()) {
+		} 
+		
+		   public boolean agregarDocenteASala(Docente docente, String colorSala) {
+		        if (docente.getTipo() == TipoDeEspecialidad.JARDIN) {
+		            Sala sala = obtenerSalaPorColor(colorSala);
+		            if (sala != null) {
+		                return sala.agregarDocente(docente);
+		            }
+		        }
+		        return false;
+		    }
+	/*	
+	    public void verSalas() {
+	        for (Sala sala : salas) {
+	            sala.mostrarContenido();
+	        }
+	    }
+	    	 switch (colorSala.toUpperCase()) {
 	            case "CELESTE":
 	                return salas[0];
 	            case "VERDE":

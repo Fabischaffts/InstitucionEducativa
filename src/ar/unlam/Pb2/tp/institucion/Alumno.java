@@ -27,6 +27,7 @@ public class Alumno extends Persona {
         return edad;
     }
     public boolean isAprobado() {
+    	
         return aprobado;
     }
 
