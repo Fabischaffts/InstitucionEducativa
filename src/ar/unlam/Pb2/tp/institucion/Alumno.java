@@ -1,24 +1,30 @@
 package ar.unlam.Pb2.tp.institucion;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Alumno extends Persona {
+public class Alumno extends Persona{
 
+	private Boolean asistencia;
+	private List<LocalDate> fechas;  
+    private List<Boolean> asistencias; 
+    private List<String> nivelesAprobados; 
 	private Integer edad;
     private boolean aprobado;
-    private LocalDate[] fechas;
-    private boolean[] asistencias;
+
     private int indiceClase;
 
-    public Alumno(Integer dni, String nombre, String apellido, Integer edad) {
+    public Alumno(Integer dni, String nombre, String apellido, Integer edad, Boolean asistencia) {
  		super(dni, nombre, apellido);
  	
-   
+ 		this.fechas = new ArrayList<>();
+        this.asistencias = new ArrayList<>();
+        this.nivelesAprobados = new ArrayList<>();
         this.edad = edad;
         this.aprobado = false;
-        this.fechas = new LocalDate[10]; // Inicialmente se reserva espacio para 10 fechas
-        this.asistencias = new boolean[10];
         this.indiceClase = 0;
+        this.asistencia = false;
     }
 
     
@@ -26,7 +32,19 @@ public class Alumno extends Persona {
     public Integer getEdad() {
         return edad;
     }
-    public boolean isAprobado() {
+    public List<LocalDate> getFechas() {
+		return fechas;
+	}
+
+
+
+	public void setFechas(List<LocalDate> fechas) {
+		this.fechas = fechas;
+	}
+
+
+
+	public boolean isAprobado() {
     	
         return aprobado;
     }
@@ -35,36 +53,29 @@ public class Alumno extends Persona {
         this.aprobado = aprobado;
     }
     
-
-    public boolean asistio(LocalDate fecha) {
-        for (int i = 0; i < indiceClase; i++) {
-            if (fechas[i].equals(fecha)) {
-                return asistencias[i];
-            }
+    public void registrarAsistencia(LocalDate fecha) throws AsistenciaYaRegistradaException {
+        if (fechas.contains(fecha)) {
+            throw new AsistenciaYaRegistradaException();
         }
-        return false;
+        fechas.add(fecha);
+        asistencias.add(true);  
     }
 
-    public void registrarAsistencia(LocalDate fecha, boolean presente) {
-
-        if (indiceClase == fechas.length) {
-            aumentarCapacidad();
-        }
-        fechas[indiceClase] = fecha;
-        asistencias[indiceClase] = presente;
-        indiceClase++;
+    public void agregarNivelAprobado(String nivel) {
+        nivelesAprobados.add(nivel);
     }
 
-    private void aumentarCapacidad() {
-
-        LocalDate[] nuevasFechas = new LocalDate[fechas.length * 2];
-        boolean[] nuevasAsistencias = new boolean[asistencias.length * 2];
-
-        System.arraycopy(fechas, 0, nuevasFechas, 0, fechas.length);
-        System.arraycopy(asistencias, 0, nuevasAsistencias, 0, asistencias.length);
-
-        fechas = nuevasFechas;
-        asistencias = nuevasAsistencias;
+    public boolean ultimoNivelAprobado() {
+        return !nivelesAprobados.isEmpty();
     }
+
+	public Boolean getAsistencia() {
+		return asistencia;
+	}
+
+	public void setAsistencia(Boolean asistencia) {
+		this.asistencia = asistencia;
+	}  
+    
 
 }

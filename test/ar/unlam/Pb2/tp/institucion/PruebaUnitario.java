@@ -2,7 +2,10 @@ package ar.unlam.Pb2.tp.institucion;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
 
 import org.junit.Test;
 
@@ -12,25 +15,25 @@ public class PruebaUnitario {
 	public void queSePuedaCrearUnaEscuelatest() {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		
-		String nombre = escuela.getNombre();
+		String nombre = institucionEducativa.getNombre();
 		
-		assertNotNull(escuela);
+		assertNotNull(institucionEducativa);
 		assertEquals(nombre, nombreDeEscuela);
 	}
 	@Test
 	public void queSePuedanAgregarAlumnosALaEscuela() {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelAlumno = "Leon";
 		String apellido = "Schneiders";
 		Integer edad = 4;
-		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad);
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
 		
-		Boolean alumnoEsperado = escuela.agregarAlumno(alumno);
+		Boolean alumnoEsperado = institucionEducativa.agregarAlumno(alumno);
 		Integer dniEsperado = alumno.getDni();
 		
 		assertEquals(alumno.getDni(),dniEsperado);
@@ -40,7 +43,7 @@ public class PruebaUnitario {
 	public void queSePuedanAgregarDocentesALaEscuela() {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelDocente = "Leon";
 		String apellido = "Schneiders";
@@ -48,7 +51,7 @@ public class PruebaUnitario {
 
 		Docente docente = new Docente(dni, nombreDelDocente, apellido, especialidad);
 		
-		Boolean docenteEsperado = escuela.agregarDocente(docente);
+		Boolean docenteEsperado = institucionEducativa.agregarDocente(docente);
 		Integer dniEsperado = docente.getDni();
 		
 		
@@ -60,14 +63,14 @@ public class PruebaUnitario {
 	public void queSePuedanObtenerLasSalasDiferentesAlJardin() {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		String nombre = "Celeste";
 		String nombre1 = "Verde";
 		String nombre2= "Rojo";
 		String nombre3= "Azul";
 		String salaMaron = "Maron";
 		Integer maxAlumnos = 10;
-		Jardin jardin = new Jardin(escuela, nombreDeEscuela);
+		Jardin jardin = new Jardin(institucionEducativa, nombreDeEscuela);
 		
 		Sala sala = new Sala(nombre, maxAlumnos);
 		Sala salaEsperada = jardin.obtenerSalaPorColor(nombre);
@@ -88,7 +91,7 @@ public class PruebaUnitario {
 	public void queSePuedanAgregarUnAlumnoALaSalaCorrecta() {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelAlumno = "Leon";
 		String apellido = "Schneiders";
@@ -97,23 +100,22 @@ public class PruebaUnitario {
 		Integer minAlumnos = 10;
 		Integer maxDocentes = 2;
 
-		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad);
-		Jardin jardin = new Jardin(escuela, nombreDeEscuela);
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
+		Jardin jardin = new Jardin(institucionEducativa, nombreDeEscuela);
 		Sala sala = new Sala(nombreDeSala, minAlumnos);
 		String colorDeSalaDelAlumnoEsperada = sala.getNombre();
 		String SalaEsperadaDelAlumno = jardin.agregarAlumnoASala(alumno);
 		
-		assertTrue(escuela.agregarAlumno(alumno));
+		assertTrue(institucionEducativa.agregarAlumno(alumno));
 		assertNotNull(jardin.agregarAlumnoASala(alumno));
 		assertEquals(SalaEsperadaDelAlumno,colorDeSalaDelAlumnoEsperada);
 		
-		//POR QUE NO EN EL METODO AGREGAR ALUMNO A SALA NO PUEDO USAR EL METODO CONTAINS PARA VER SI EL ALUMNO ESTA INSCRIPTO EN LA ESCUELA		
 }
 	@Test
-	public void queSePuedaAgregarUnDocentALaSalaCorrecta() {
+	public void queSePuedaAgregarUnDocentALaSalaCorrecta() throws CantidadMaximaDocentesException {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelDocente = "Leon";
 		String apellido = "Schneiders";
@@ -124,35 +126,33 @@ public class PruebaUnitario {
 		Integer minAlumnos = 10;
 		
 
-		Jardin jardin = new Jardin(escuela, nombreDeEscuela);
+		Jardin jardin = new Jardin(institucionEducativa, nombreDeEscuela);
 		Sala sala = new Sala(nombreDeSala, minAlumnos);
 		jardin.agregarDocenteASala(docente, nombreDeSala);
 		ArrayList<Docente> docentebuscado = sala.getDocentes();
-		assertTrue(escuela.agregarDocente(docente));;
+		assertTrue(institucionEducativa.agregarDocente(docente));;
 		assertNotNull(sala.getDocentes());
-	//	assertTrue(docentebuscado.contains(docente));consultar
-		
 	
 }
 	@Test
 	public void queSeSiHayUnaSalaConMenosDe10AlumnosSePuedaMezclarLaSala() {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelAlumno = "Leon";
 		String apellido = "Schneiders";
 		Integer edad = 4;
 		String nombreDeSala = "Azul";
 		Integer minAlumnos = 10;
-		Integer maxDocentes = 2;
 
-		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad);
-		Jardin jardin = new Jardin(escuela, nombreDeEscuela);
+
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
+		Jardin jardin = new Jardin(institucionEducativa, nombreDeEscuela);
 		Sala sala = new Sala(nombreDeSala, minAlumnos);
 		Integer cantidadDeAlumnosEnLaSala = sala.obtenerCantidadDeAlumnos();
 		Integer cantidadDeAlumnosEsperados = 0;
-		escuela.agregarAlumno(alumno);
+		institucionEducativa.agregarAlumno(alumno);
 		jardin.agregarAlumnoASala(alumno);
 		
 		assertEquals(cantidadDeAlumnosEnLaSala,cantidadDeAlumnosEsperados);
@@ -163,69 +163,197 @@ public class PruebaUnitario {
 	public void queSePuedaAgregarUnAlumnoALaPrimaria() {
 
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelAlumno = "Leon";
 		String apellido = "Schneiders";
 		Integer edad = 7;
 		
-		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad);
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
 		alumno.setAprobado(false);
 		Primaria primaria = new Primaria(nombreDeEscuela);
 		Grado grado = new Grado("primer Grado", 8, 1);
 		boolean agregarAlumnno = primaria.agregarAlumno(alumno);
 		boolean agregarAlumnnoAGrado = primaria.inscribirAlumnoEnGrado(alumno,grado);
-		assertTrue(escuela.agregarAlumno(alumno));
+		assertTrue(institucionEducativa.agregarAlumno(alumno));
 		assertTrue(agregarAlumnno);
 		assertTrue(agregarAlumnnoAGrado);
 		
 }
 	@Test
-	public void queSePuedaAgregarUnDocentALGradoCorrecta() {
+	public void queSePuedaAgregarUnDocentALGradoCorrecta() throws CantidadMaximaDocentesException {
 		
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelDocente = "Leon";
 		String apellido = "Schneiders";
-		TipoDeEspecialidad especialidad = TipoDeEspecialidad.JARDIN;
+		TipoDeEspecialidad especialidad = TipoDeEspecialidad.PRIMARIA;
 
 		Docente docente = new Docente(dni, nombreDelDocente, apellido, especialidad);
 		String nombreDeSala = "Azul";
 		Integer minAlumnos = 10;
 		
 
-		Jardin jardin = new Jardin(escuela, nombreDeEscuela);
+		Jardin jardin = new Jardin(institucionEducativa, nombreDeEscuela);
 		Sala sala = new Sala(nombreDeSala, minAlumnos);
 		jardin.agregarDocenteASala(docente, nombreDeSala);
 		ArrayList<Docente> docentebuscado = sala.getDocentes();
-		assertTrue(escuela.agregarDocente(docente));;
+		assertTrue(institucionEducativa.agregarDocente(docente));;
 		assertNotNull(sala.getDocentes());
-	//	assertTrue(docentebuscado.contains(docente));consultar
-		
+	
 	}
 	//Secundaria
 	@Test
 	public void queSePuedaAgregarUnAlumnoALaSecundaria() {
 
 		String nombreDeEscuela = "Unlam";
-		Escuela escuela = new Escuela(nombreDeEscuela);
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
 		Integer dni = 5620300;
 		String nombreDelAlumno = "Leon";
 		String apellido = "Schneiders";
 		Integer edad = 7;
 		Integer edadMinima = 12;
-		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad);
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
 		alumno.setAprobado(false);
-		Secundaria secundaria = new Secundaria();
+		Secundaria secundaria = new Secundaria(nombreDeEscuela);
 		Anio anio = new Anio("primer anio", 8, 1, edadMinima);
 		boolean agregarAlumnno = secundaria.agregarAlumno(alumno);
 		boolean agregarAlumnnoAAnio = secundaria.inscribirAlumnoEnAnio(alumno,anio);
-		assertTrue(escuela.agregarAlumno(alumno));
+		assertTrue(institucionEducativa.agregarAlumno(alumno));
 		assertTrue(agregarAlumnno);
 		assertTrue(agregarAlumnnoAAnio);
 		
 }
+	@Test
+	public void queSePuedaAgregarUnDocentAlCursoCorrecto() throws CantidadMaximaDocentesException {
+		
+		String nombreDeEscuela = "Unlam";
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
+		Integer dni = 5620300;
+		String nombreDelDocente = "Leon";
+		String apellido = "Schneiders";
+		TipoDeEspecialidad especialidad = TipoDeEspecialidad.SECUNDARIA;
+
+		Docente docente = new Docente(dni, nombreDelDocente, apellido, especialidad);
+		String nombreDeSala = "Azul";
+		Integer minAlumnos = 10;
+		
+
+		Jardin jardin = new Jardin(institucionEducativa, nombreDeEscuela);
+		Sala sala = new Sala(nombreDeSala, minAlumnos);
+		jardin.agregarDocenteASala(docente, nombreDeSala);
+		ArrayList<Docente> docentebuscado = sala.getDocentes();
+		assertTrue(institucionEducativa.agregarDocente(docente));;
+		assertNotNull(sala.getDocentes());
+		
+	}
+	@Test
+	public void devolverUnaListaDeLosAlumnosInscriptoAlfabeticamente() {
+		
+		String nombreDeEscuela = "Unlam";
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
+		Integer dni = 5620300;
+		String nombreDelAlumno = "Bauti";
+		String apellido = "Schneiders";
+		Integer edad = 4;
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad,true);
+		Alumno alumno2 = new Alumno(dni,"Ale", apellido, edad, true);
+		Alumno alumno3 = new Alumno(dni,"Cesar", apellido, edad, true);
+		
+		institucionEducativa.agregarAlumno(alumno);
+		institucionEducativa.agregarAlumno(alumno2);
+		institucionEducativa.agregarAlumno(alumno3);	
+		
+		List<Alumno> listaAlumnos = institucionEducativa.getAlumnos();
+		int indice =0;
+		for (Persona persona : listaAlumnos) {
+		    if (persona instanceof Alumno) {
+		        Alumno alumnos = (Alumno) persona; 
+		switch (indice) {
+		case 1:
+			assertEquals(alumno2, alumnos);
+			break;
+		case 2:
+			assertEquals(alumno, alumnos);
+			break;
+		case 3:
+			assertEquals(alumno3, alumnos);
+			break;
+		}
+		indice ++;
+		}	
+	}
+	}
+	@Test
+	public void devolverUnaListaDeLosAlumnosInscriptoAlCursoPorDni() {
+		
+		String nombreDeEscuela = "Unlam";
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
+		Integer dni = 1;
+		String nombreDelAlumno = "Bauti";
+		String apellido = "Schneiders";
+		Integer edad = 4;
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
+		Alumno alumno2 = new Alumno(2,"Ale", apellido, edad, true);
+		Alumno alumno3 = new Alumno(3,"Cesar", apellido, edad, true);
+		
+		institucionEducativa.agregarAlumno(alumno);
+		institucionEducativa.agregarAlumno(alumno2);
+		institucionEducativa.agregarAlumno(alumno3);	
+		
+		List<Alumno> listaAlumnos = institucionEducativa.getAlumnos();
+		int indice =0;
+		for (Persona persona : listaAlumnos) {
+		    if (persona instanceof Alumno) {
+		        Alumno alumnos = (Alumno) persona; 
+		switch (indice) {
+		case 1:
+			assertEquals(alumno2, alumnos);
+			break;
+		case 2:
+			assertEquals(alumno3, alumnos);
+			break;
+		case 3:
+			assertEquals(alumno, alumnos);
+			break;
+		}
+		indice ++;
+		}	
+	}
+	}
+	@Test(expected = AlumnoNoEncontradoException.class )
+	public void buscarUnAlumnoEnUnaSala() throws AlumnoNoEncontradoException {
+		
+		
+		Sala sala =new Sala("celeste", 20);
+		Integer dni = 1;
+		String nombreDelAlumno = "Bauti";
+		String apellido = "Schneiders";
+		Integer edad = 4;
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
+		sala.agregarAlumno(alumno);
+		assertEquals(sala.getAlumnos().size(),1);
+		assertEquals(sala.buscarAlumno(dni),alumno);
+}
+	
+	@Test(expected = AsistenciaYaRegistradaException.class)
+	public void queNoSePuedeRegistrarLaAsistenciaDosVecesEnElMismoDia() throws AsistenciaYaRegistradaException{
+		
+		String nombreDeEscuela = "Unlam";
+		Institucion institucionEducativa = new Institucion(nombreDeEscuela);
+		Integer dni = 1;
+		String nombreDelAlumno = "Bauti";
+		String apellido = "Schneiders";
+		Integer edad = 4;
+		LocalDate fecha = LocalDate.of(2024, 10, 29);
+		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
+		
+		institucionEducativa.registrarAsistencia(alumno, fecha);
+		institucionEducativa.registrarAsistencia(alumno, fecha);
+}
 	
 	
 }
+	
+	

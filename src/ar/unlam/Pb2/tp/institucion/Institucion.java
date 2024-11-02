@@ -1,26 +1,26 @@
 package ar.unlam.Pb2.tp.institucion;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-
-
-public class Escuela {
+public class Institucion extends Curso {
 	
-	private String nombre;
+	
 	private ArrayList<Docente> docentes;
 	private ArrayList <Alumno> alumnos;
-
+	private Map<Alumno,LocalDate>asistencia;
 	
-	public Escuela(String nombre) {
-		
+	
+	public Institucion(String nombre) {
+		super(nombre);
 		this.nombre = nombre;
 		this.docentes = new ArrayList <Docente>();
-		this.alumnos = new ArrayList<Alumno>();
-	
-	    
-		
-	}
+		this.alumnos = new ArrayList<Alumno>();	
+		this.asistencia = new HashMap<>();
+		}
+
 
 	public String getNombre() {
 		return nombre;
@@ -67,33 +67,19 @@ public class Escuela {
 	       }
 	       
 	    		return docentes.add(docente);
-	}
-/*	 public void verTodo() {
-	       
-	                System.out.println("Alumnos:");
-	                Alumno[] alumnos = getAlumnos();
-	                for (Alumno alumno : alumnos) {
-	                    if (alumno != null) {
-	                        System.out.println(" - " + alumno.getNombre());//+alumno.asistio(null));
-	                    }
-	                }
-	                
-	                System.out.println("Docentes:");
-	                Docente[] docentes = getDocentes();
-	                for (Docente docente : docentes) {
-	                    if (docente != null) {
-	                        System.out.println(" - " + docente.getNombre());
-	                    }
-	                }
-	            }
-	    public Alumno buscarAlumnoPorNombre(String nombreAlumno) {
-	        Alumno[] alumnos = getAlumnos(); 
-	        for (int i = 0; i < alumnos.length; i++) { 
-	            if (alumnos[i] != null && alumnos[i].getNombre().equals(nombreAlumno)) {  
-	                return alumnos[i];  
-	            }
-	        }
-	        return null;  
+}
+
+
+	@Override
+	public void registrarAsistencia(Alumno alumno, LocalDate fecha) throws AsistenciaYaRegistradaException {
+	   
+	    if (alumno.getFechas().contains(fecha)) {
+	        throw new AsistenciaYaRegistradaException(); 
 	    }
-*/
-	        }
+	    alumno.registrarAsistencia(fecha);
+	    asistencia.put(alumno, fecha);
+	}
+		
+	
+
+}

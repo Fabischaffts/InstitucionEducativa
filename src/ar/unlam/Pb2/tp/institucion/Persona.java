@@ -1,6 +1,8 @@
 package ar.unlam.Pb2.tp.institucion;
 
-public class Persona {
+import java.util.Objects;
+
+public class Persona implements Comparable<Persona>{
 	
 	private Integer dni;
     private String nombre;
@@ -36,5 +38,32 @@ public class Persona {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(apellido, dni, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return Objects.equals(apellido, other.apellido) && Objects.equals(dni, other.dni)
+				&& Objects.equals(nombre, other.nombre);
+	}
+
+	@Override
+	public String toString() {
+		return "Persona [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + "]";
+	}
+	
+	public int compareTo(Persona alumno) {
+		return apellido.compareTo(alumno.getApellido())+nombre.compareTo(alumno.getNombre())+dni.compareTo(alumno.getDni());
+	}	
 
 }

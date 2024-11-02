@@ -2,16 +2,19 @@ package ar.unlam.Pb2.tp.institucion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
-public class Primaria extends Escuela{
+public class Primaria extends Institucion{
 	
 	private ArrayList <Alumno> alumnos;
 	private LinkedList<Grado> grados;
+	private List<Sala>salas;
 	
 	public Primaria(String nombre) {
 		super(nombre);
 		this.grados =new LinkedList<Grado>();
 		this.alumnos = new ArrayList<Alumno>();
+		this.salas = new ArrayList<>();
 		
 	}
 
@@ -29,7 +32,7 @@ public class Primaria extends Escuela{
 		for (Alumno alumnoEnPrimaria : alumnos) {
 			if(alumnoEnPrimaria.equals(alumno));
 			if(alumno.isAprobado()== true&&alumno.getEdad()>=grado.getEdadMinima());
-			return grado.agregarAlumnoAGrado(alumno);		
+			return grado.agregarAlumno(alumno);		
 		}
 		return false;	
 	}
@@ -47,6 +50,9 @@ public class Primaria extends Escuela{
 	public void setGrados(LinkedList<Grado> grados) {
 		this.grados = grados;
 	}
+    public void agregarSala(Sala sala) {
+        salas.add(sala);
+    }
 
    /* private Grado[] grados;
 

@@ -1,14 +1,15 @@
 package ar.unlam.Pb2.tp.institucion;
 
 
-public class Secundaria {
+public class Secundaria extends Institucion {
 	 
 	
 	private Anio[] anios;
 	private Materia[] materias;
 	
 
-	    public Secundaria() {
+	    public Secundaria(String nombre) {
+	    	super(nombre);
 	    	 materias = new Materia[1];
 	        anios = new Anio[6];
 	        anios[0] = new Anio("Primer anio", 12,1,3);
@@ -87,10 +88,7 @@ public class Secundaria {
 	        }
 		
 	}
-	public boolean agregarAlumno(Alumno alumno) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+
 	public boolean inscribirAlumnoEnAnio(Alumno alumno, Anio anio) {
 		// TODO Auto-generated method stub
 		return true;

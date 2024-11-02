@@ -1,11 +1,12 @@
 package ar.unlam.Pb2.tp.institucion;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Sala {
+public class Sala extends Curso{
 	   
-	private String nombre;
+	
     private ArrayList <Alumno> alumnos;
     private ArrayList <Docente>docentes;
     private int indiceAlumno;
@@ -13,7 +14,7 @@ public class Sala {
     private final static Integer maxDocentes = 2;
 
     public Sala(String nombre, Integer minAlumnos) {
-        this.nombre = nombre;
+       super(nombre);
         this.alumnos = new ArrayList<Alumno>();
         this.docentes = new ArrayList<Docente>();
         this.indiceAlumno = 0;
@@ -25,48 +26,30 @@ public class Sala {
         return nombre;
     }
 
-    public void agregarAlumno(Alumno alumno) {
-        if (indiceAlumno < alumnos.size()) {
+    public Boolean agregarAlumno(Alumno alumno) {
+   //    if (indiceAlumno < alumnos.size()) {
            alumnos.add(alumno);
-        } else {
-            System.out.println("No hay más espacio para alumnos en la sala " + nombre);
-       }
+        
+		return false;
 
     }
 
-    public Boolean agregarDocente(Docente docente) {
+    public Boolean agregarDocente(Docente docente) throws CantidadMaximaDocentesException   {
        
     		if(docentes.size()<=maxDocentes) {
     		docentes.add(docente);
     		return true;
 		}
-    	return false;	
+    	 throw new CantidadMaximaDocentesException();	
     } 
+
+
 	public Integer obtenerCantidadDeAlumnos() {
 		return alumnos.size();
 		
 		
 	}
     
-/*
-    public Sala mostrarContenido() {
-        System.out.println("Sala: " + nombre);
-        System.out.println("Alumnos:");
-        for (Alumno alumno : alumnos) {
-            if (alumno != null) {
-                System.out.println(" - " + alumno.getNombre());
-            }
-        }
-       /* System.out.println("Docentes:");
-        for (DocenteJardin docente : docentes) {
-            if (docente != null) {
-                System.out.println(" - " + docente.getNombre());
-            }
-        }
-		
-		return null;
-    }
-*/
 	public ArrayList<Alumno> getAlumnos() {
 		return alumnos;
 	}
@@ -123,6 +106,10 @@ public class Sala {
 			return false;
 		Sala other = (Sala) obj;
 		return Objects.equals(nombre, other.nombre);
+	}
+
+	@Override
+	public void registrarAsistencia(Alumno alumno, LocalDate fecha) throws AsistenciaYaRegistradaException {
 	}
 
 
