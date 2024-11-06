@@ -212,14 +212,14 @@ public class PruebaUnitario {
 		Integer dni = 5620300;
 		String nombreDelAlumno = "Leon";
 		String apellido = "Schneiders";
-		Integer edad = 7;
+		Integer edad = 15;
 		Integer edadMinima = 12;
 		Alumno alumno = new Alumno(dni, nombreDelAlumno, apellido, edad, true);
-		alumno.setAprobado(false);
+		alumno.setAprobado(true);
 		Secundaria secundaria = new Secundaria(nombreDeEscuela);
 		Anio anio = new Anio("primer anio", 8, 1, edadMinima);
-		boolean agregarAlumnno = secundaria.agregarAlumno(alumno);
-		boolean agregarAlumnnoAAnio = secundaria.inscribirAlumnoEnAnio(alumno,anio);
+		Boolean agregarAlumnno = secundaria.agregarAlumno(alumno);
+		Boolean agregarAlumnnoAAnio = secundaria.agregarAlumnoAAnio(alumno,anio);
 		assertTrue(institucionEducativa.agregarAlumno(alumno));
 		assertTrue(agregarAlumnno);
 		assertTrue(agregarAlumnnoAAnio);

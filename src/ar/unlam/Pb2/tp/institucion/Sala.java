@@ -2,54 +2,54 @@ package ar.unlam.Pb2.tp.institucion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-public class Sala extends Curso{
-	   
-	
-    private ArrayList <Alumno> alumnos;
-    private ArrayList <Docente>docentes;
-    private int indiceAlumno;
-    private int indiceDocente;
-    private final static Integer maxDocentes = 2;
+public class Sala extends Curso {
 
-    public Sala(String nombre, Integer minAlumnos) {
-       super(nombre);
-        this.alumnos = new ArrayList<Alumno>();
-        this.docentes = new ArrayList<Docente>();
-        this.indiceAlumno = 0;
-        this.indiceDocente = 0;
-       
-    }
+	private ArrayList<Alumno> alumnos;
+	private ArrayList<Docente> docentes;
+	private int indiceAlumno;
+	private int indiceDocente;
+	private final static Integer maxDocentes = 2;
+	private Map<Alumno, LocalDate> listaDeAsistencia;
 
-    public String getNombre() {
-        return nombre;
-    }
+	public Sala(String nombre, Integer minAlumnos) {
+		super(nombre);
+		this.alumnos = new ArrayList<Alumno>();
+		this.docentes = new ArrayList<Docente>();
+		this.indiceAlumno = 0;
+		this.indiceDocente = 0;
+		this.listaDeAsistencia = new HashMap<>();
 
-    public Boolean agregarAlumno(Alumno alumno) {
-   //    if (indiceAlumno < alumnos.size()) {
-           alumnos.add(alumno);
-        
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public Boolean agregarAlumno(Alumno alumno) {
+		alumnos.add(alumno);
+
 		return false;
 
-    }
+	}
 
-    public Boolean agregarDocente(Docente docente) throws CantidadMaximaDocentesException   {
-       
-    		if(docentes.size()<=maxDocentes) {
-    		docentes.add(docente);
-    		return true;
+	public Boolean agregarDocente(Docente docente) throws CantidadMaximaDocentesException {
+
+		if (docentes.size() <= maxDocentes) {
+			docentes.add(docente);
+			return true;
 		}
-    	 throw new CantidadMaximaDocentesException();	
-    } 
-
+		throw new CantidadMaximaDocentesException();
+	}
 
 	public Integer obtenerCantidadDeAlumnos() {
 		return alumnos.size();
-		
-		
+
 	}
-    
+
 	public ArrayList<Alumno> getAlumnos() {
 		return alumnos;
 	}
@@ -87,7 +87,7 @@ public class Sala extends Curso{
 	}
 
 	public static Sala valueOf(String colorSala) {
-		
+
 		return null;
 	}
 
@@ -110,8 +110,12 @@ public class Sala extends Curso{
 
 	@Override
 	public void registrarAsistencia(Alumno alumno, LocalDate fecha) throws AsistenciaYaRegistradaException {
+
+		if (listaDeAsistencia.get(alumno).equals(fecha)) {
+			throw new AsistenciaYaRegistradaException();
+		}
+		alumno.setAsistencia(true);
+		listaDeAsistencia.put(alumno, fecha);
 	}
 
-
-	
 }

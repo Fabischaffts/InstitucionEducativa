@@ -1,75 +1,89 @@
 package ar.unlam.Pb2.tp.institucion;
 
-public class Anio {
-	
- 	private String nombre;
-    private Alumno[] alumnos;
-    private DocenteSecundario[] docentes;
-    private int indiceAlumno;
-    private int edadMinima;
-    private int indiceDocente;
-    private Materia[] materias;
-    
-    public Anio(String nombre, int edadMinima, int maxDocente, int cantidadMaxDeMateria) {
-    	
-    	 materias = new Materia[cantidadMaxDeMateria];
-    	 this.nombre = nombre;
-         this.edadMinima = edadMinima;
-         this.alumnos = new Alumno[30]; 
-         this.indiceAlumno = 0;
-         this.docentes = new DocenteSecundario[1];
-         this.indiceDocente = 0;
-    }
-    public boolean agregarAlumno(Alumno alumno) {
-        if (alumno.getEdad() < edadMinima) {
-            System.out.println("El alumno " + alumno.getNombre() + " no cumple con la edad mínima de " + edadMinima + " años para " + nombre);
-            return false;
-        }
-        if (indiceAlumno < alumnos.length) {
-            alumnos[indiceAlumno++] = alumno;
-            return true;
-        } else {
-            System.out.println("No hay más espacio para alumnos en la sala " + nombre);
-            return false;
-        }
-    }
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    public String getNombre() {
-        return nombre;
-    }
+public class Anio extends Curso {
 
-    public Alumno buscarAlumnoPorNombre(String nombreAlumno) {
-        for (int i = 0; i < indiceAlumno; i++) {
-            if (alumnos[i].getNombre().equals(nombreAlumno)) {
-                return alumnos[i];
-            }
-        }
-        return null;
-    }
+	private String nombre;
+	private List<Alumno> alumnos;
+	private int edadMinima;
+	private Map<Alumno, LocalDate> listaDeAsistencia;
+	private final Integer maxDocentes = 1;
 
-	public void agregarDocente(DocenteSecundario docente) {
-		if (indiceDocente < docentes.length) {
-            docentes[indiceDocente++] = docente;
-        } else {
-            System.out.println("No hay más espacio para docentes en la materia" + nombre);
-        }
-		
+	public Anio(String nombre, int edadMinima, int maxDocente, int cantidadMaxDeMateria) {
+		super(nombre);
+		this.nombre = nombre;
+		this.edadMinima = edadMinima;
+		this.alumnos = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+		this.listaDeAsistencia = new HashMap<>();
+
 	}
 
-	public Alumno[] getAlumnos() {
+	public Boolean agregarAlumno(Alumno alumno) {
+
+		if (alumno.getEdad() > 13) {
+			return alumnos.add(alumno);
+		}
+		return false;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public Alumno buscarAlumnoPorNombre(String nombreAlumno) {
+		for (Alumno alumno : alumnos) {
+			if (alumno.getNombre().equals(nombreAlumno))
+				;
+			return alumno;
+		}
+		return null;
+	}
+
+	public List<Alumno> getAlumnos() {
 		return alumnos;
 	}
 
-	public void setAlumnos(Alumno[] alumnos) {
+	public void setAlumnos(List<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
 
-	public DocenteSecundario[] getDocentes() {
+	public List<Docente> getDocentes() {
 		return docentes;
 	}
 
-	public void setDocentes(DocenteSecundario[] docentes) {
+	public void setDocentes(List<Docente> docentes) {
 		this.docentes = docentes;
 	}
-	
+
+	public Integer getEdadMinima() {
+		return edadMinima;
+	}
+
+	@Override
+	public Boolean agregarDocente(Docente docente) throws CantidadMaximaDocentesException {
+
+		if (docentes.size() <= maxDocentes) {
+			docentes.add(docente);
+			return true;
+		}
+		throw new CantidadMaximaDocentesException();
+	}
+
+	@Override
+	public void registrarAsistencia(Alumno alumno, LocalDate fecha) throws AsistenciaYaRegistradaException {
+		if (listaDeAsistencia.get(alumno).equals(fecha)) {
+			throw new AsistenciaYaRegistradaException();
+		} else {
+			alumno.setAsistencia(true);
+			listaDeAsistencia.put(alumno, fecha);
+		}
+
+	}
+
 }
